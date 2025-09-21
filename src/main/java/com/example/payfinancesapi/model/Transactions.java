@@ -10,7 +10,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "transactions")
-public class transactions {
+public class Transactions {
 
     @Id
     @GeneratedValue
