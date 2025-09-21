@@ -1,5 +1,6 @@
 package com.example.payfinancesapi.model;
 
+import com.example.payfinancesapi.util.ValidationTransactionStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ public class transactions {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private UUID transactionId;
 
     private int userId;
 
@@ -23,7 +24,8 @@ public class transactions {
 
     private String currency;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ValidationTransactionStatus status;
 
     private LocalDateTime createdAt;
 
