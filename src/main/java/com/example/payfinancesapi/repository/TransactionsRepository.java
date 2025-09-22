@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TransactionsRepository extends JpaRepository<Transactions, Integer> {
+public interface TransactionsRepository extends JpaRepository<Transactions, String> {
 
     @Query("select t from Transactions t where t.userId = ?1")
-    List<Transactions> findTransactionsByUserId();
+    List<Transactions> findTransactionsByUserId(Integer userId);
 
     @Query("select t from Transactions t where t.userId = ?1 and t.transactionId = ?2")
-    List<Transactions> findTransactionsByUserIdAndTransactionId(String userId, String transactionId);
+    List<Transactions> findTransactionsByUserIdAndTransactionId(Integer userId, String transactionId);
 
 }
