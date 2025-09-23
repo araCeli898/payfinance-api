@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transactions, String> {
@@ -12,7 +13,7 @@ public interface TransactionsRepository extends JpaRepository<Transactions, Stri
     @Query("select t from Transactions t where t.userId = ?1")
     List<Transactions> findTransactionsByUserId(Integer userId);
 
-    @Query("select t from Transactions t where t.userId = ?1 and t.transactionId = ?2")
-    List<Transactions> findTransactionsByUserIdAndTransactionId(Integer userId, String transactionId);
+    @Query("select t from Transactions t where t.transactionId = ?1")
+    Optional<Transactions> findTransactionsByTransactionId(String transactionId);
 
 }

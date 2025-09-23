@@ -10,4 +10,9 @@ public class Result {
     String error_code;
     String error_description;
     String code;
+
+    public Result(String status, Object data) {
+        this.status = status;
+        this.data = data;
+    }
 }
