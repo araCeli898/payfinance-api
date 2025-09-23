@@ -2,6 +2,9 @@ package com.example.payfinancesapi.util;
 
 public class Constants {
 
+    public static final String RESULT_OK = "OK";
+    public static final String RESULT_ERROR = "ERROR";
+
     //Se aplica restricciones para que a modo prueba solo permita ingresar valores especificos en los parametros especificados
     public static final String bankCode = "(BANK123|BANK456|BANK789)";
     public static final String currency = "(EUR|USD|ARG)";

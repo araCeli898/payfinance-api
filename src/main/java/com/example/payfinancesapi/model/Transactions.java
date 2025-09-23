@@ -14,7 +14,7 @@ public class Transactions {
 
     @Id
     @GeneratedValue
-    private UUID transactionId;
+    private String transactionId;
 
     private int userId;
 
