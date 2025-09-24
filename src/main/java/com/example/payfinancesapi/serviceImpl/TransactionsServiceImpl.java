@@ -7,6 +7,7 @@ import com.example.payfinancesapi.model.Transactions;
 import com.example.payfinancesapi.repository.TransactionsRepository;
 import com.example.payfinancesapi.service.TransactionsService;
 import com.example.payfinancesapi.util.Constants;
+import com.example.payfinancesapi.util.RandomStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.apache.bcel.classfile.Constant;
 import org.modelmapper.ModelMapper;
@@ -42,8 +43,17 @@ public class TransactionsServiceImpl implements TransactionsService {
     }
 
     @Override
-    public Result createTransaction(TransactionRequestDTO req) {
-        return null;
+    public Result createTransaction(TransactionRequestDTO req) throws Exception {
+        Transactions transaction = new ModelMapper().map(req, Transactions.class);
+        transaction.setStatus(RandomStatus.getRandomStatus());
+        try {
+            log.info("Creating transaction, userId {}", transaction.getUserId());
+            transactionsRepository.save(transaction);
+        } catch (Exception e) {
+            log.error("Error creating transaction, userId {}", transaction.getUserId(), e);
+            throw new Exception("Error creating transaction, userId " + transaction.getUserId());
+        }
+        return new Result(Constants.RESULT_OK, transaction);
     }
 
     private Transactions findTransactionById (String transactionId) throws Exception {
