@@ -27,9 +27,9 @@ public class TransactionsServiceImpl implements TransactionsService {
     private TransactionsRepository transactionsRepository;
 
     @Override
-    public Result getTransactions(Integer userId) {
-        log.info("Finding transactions by userId {}", userId);
-        List<Transactions> transactions = transactionsRepository.findTransactionsByUserId(userId);
+    public Result getTransactions() {
+        log.info("Finding all transactions");
+        List<Transactions> transactions = transactionsRepository.findAllTransactions();
         ModelMapper modelMapper = new ModelMapper();
         List<TransactionDTO> transactionDTOS = Arrays.asList(modelMapper.map(transactions, TransactionDTO[].class));
         return new Result(Constants.RESULT_OK, transactionDTOS);

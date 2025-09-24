@@ -10,8 +10,8 @@ import java.util.Optional;
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transactions, String> {
 
-    @Query("select t from Transactions t where t.userId = ?1")
-    List<Transactions> findTransactionsByUserId(Integer userId);
+    @Query("select t from Transactions t")
+    List<Transactions> findAllTransactions();
 
     @Query("select t from Transactions t where t.transactionId = ?1")
     Optional<Transactions> findTransactionsByTransactionId(String transactionId);
