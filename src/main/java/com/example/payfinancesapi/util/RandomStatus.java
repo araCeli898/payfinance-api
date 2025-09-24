@@ -1,5 +1,7 @@
 package com.example.payfinancesapi.util;
 
+import com.example.payfinancesapi.model.ValidationTransactionStatus;
+
 import java.util.Random;
 
 public class RandomStatus {

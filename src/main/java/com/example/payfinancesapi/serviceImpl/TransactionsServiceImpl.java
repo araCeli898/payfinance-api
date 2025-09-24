@@ -53,7 +53,7 @@ public class TransactionsServiceImpl implements TransactionsService {
             log.error("Error creating transaction, userId {}", transaction.getUserId(), e);
             throw new Exception("Error creating transaction, userId " + transaction.getUserId());
         }
-        return new Result(Constants.RESULT_OK, transaction);
+        return new Result(Constants.RESULT_OK, TransactionDTO[].class);
     }
 
     private Transactions findTransactionById (String transactionId) throws Exception {

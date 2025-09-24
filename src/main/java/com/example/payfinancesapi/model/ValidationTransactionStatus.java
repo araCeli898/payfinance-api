@@ -1,4 +1,4 @@
-package com.example.payfinancesapi.util;
+package com.example.payfinancesapi.model;
 
 
 public enum ValidationTransactionStatus {
