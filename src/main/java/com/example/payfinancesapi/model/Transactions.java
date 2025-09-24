@@ -3,6 +3,8 @@ package com.example.payfinancesapi.model;
 import com.example.payfinancesapi.util.ValidationTransactionStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -26,6 +28,8 @@ public class Transactions {
     @Enumerated(EnumType.STRING)
     private ValidationTransactionStatus status;
 
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     private String bankCode;
