@@ -11,6 +11,6 @@ public interface TransactionsService {
 
     Result getTransactionsById(String transactionId) throws Exception;
 
-    Result createTransaction(TransactionRequestDTO req);
+    Result createTransaction(TransactionRequestDTO req) throws Exception;
 
 }
