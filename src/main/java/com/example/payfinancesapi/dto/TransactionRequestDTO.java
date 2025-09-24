@@ -1,5 +1,6 @@
 package com.example.payfinancesapi.dto;
 
+import com.example.payfinancesapi.model.Currency;
 import com.example.payfinancesapi.util.Constants;
 import com.example.payfinancesapi.util.ValidationConstants;
 import jakarta.validation.constraints.NotNull;
@@ -15,9 +16,8 @@ public class TransactionRequestDTO {
     @Range(min = 1, message = ValidationConstants.amountMin)
     private Double amount;
 
-    @Pattern(regexp = Constants.currency, message = ValidationConstants.currencyRegexp )
-    @NotNull (message = ValidationConstants.currency)
-    private String currency;
+    @NotNull(message = ValidationConstants.currency)
+    private Currency currency;
 
     @Pattern(regexp = Constants.bankCode, message = ValidationConstants.bankCodeRegexp )
     @NotNull (message = ValidationConstants.bankCode)

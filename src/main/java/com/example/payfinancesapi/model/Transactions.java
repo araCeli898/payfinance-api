@@ -1,6 +1,5 @@
 package com.example.payfinancesapi.model;
 
-import com.example.payfinancesapi.util.ValidationTransactionStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
