@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TransactionsService {
 
-    Result getTransactions(Integer userId);
+    Result getTransactions(Integer userId) throws Exception;
 
     Result getTransactionsById(Integer userId, Integer transactionId) throws Exception;
 

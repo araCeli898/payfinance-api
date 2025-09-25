@@ -1,11 +1,9 @@
 package com.example.payfinancesapi.model;
 
-import com.example.payfinancesapi.modelEnum.BankCode;
 import com.example.payfinancesapi.modelEnum.ValidationTransactionStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

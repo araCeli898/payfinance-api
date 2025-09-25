@@ -1,6 +1,5 @@
 package com.example.payfinancesapi.dto;
 
-import com.example.payfinancesapi.modelEnum.Currency;
 import com.example.payfinancesapi.util.Constants;
 import com.example.payfinancesapi.util.ValidationConstants;
 import jakarta.validation.constraints.NotNull;
@@ -11,8 +10,7 @@ import org.hibernate.validator.constraints.Range;
 @Data
 public class TransactionRequestDTO {
 
-    @NotNull (message = ValidationConstants.userId)
-    private Integer userId;
+    @NotNull (message = ValidationConstants.userId)    private Integer userId;
 
     @NotNull (message = ValidationConstants.amount)
     @Range(min = 1, message = ValidationConstants.amountMin)
