@@ -85,11 +85,12 @@ POST	/transaction	Crear una nueva transacción.
 ## Nota:
 Se aplicaron pattern para los siguientes parametros: recipientAccount, curreny, bankCode. Se deja especificado valores admisibles para los 3 campos a la hora de hacer pruebas:
 
-## currency: USD, EUR, ARS;
-## recipientAccount: DE98770400440532013123, EF56770400440532852123, CR95175300440532013751
-## bankCode: BANK123, BANK456, BANK789
+currency: USD, EUR, ARS;
+recipientAccount: DE98770400440532013123, EF56770400440532852123, CR95175300440532013751
+bankCode: BANK123, BANK456, BANK789
 
-Ejemplo de DTO de request: 
+POST: http://localhost:8080/transaction
+Ejemplo de DTO de request en post: 
 
     {
 
@@ -128,8 +129,45 @@ Ejemplo de respuesta:
       
     }
 
+GET: http://localhost:8080/transaction/{userId}
 
+Ejemplo de respuesta:
 
+        {
+            "transactionId": 1,
+            "userId": 1,
+            "recipientAccount": "DE98770400440532013123",
+            "amount": 12.0,
+            "currency": "EUR",
+            "status": "NO_APROBADO",
+            "createdAt": "2025-09-25T19:57:05.714696",
+            "bankCode": "BANK123"
+        },
+        {
+            "transactionId": 2,
+            "userId": 1,
+            "recipientAccount": "DE98770400440532013123",
+            "amount": 12.0,
+            "currency": "EUR",
+            "status": "APROBADO",
+            "createdAt": "2025-09-25T19:57:37.006256",
+            "bankCode": "BANK123"
+        }
+        
+GET BY TRANSACTIOID: http://localhost:8080transaction/{userId}/{transactionId}
+
+Ejemplo de respuesta:
+
+    {
+            "transactionId": 1,
+            "userId": 1,
+            "recipientAccount": "DE98770400440532013123",
+            "amount": 12.0,
+            "currency": "EUR",
+            "status": "NO_APROBADO",
+            "createdAt": "2025-09-25T19:57:05.714696",
+            "bankCode": "BANK123"
+     }
 ## 5. Validaciones
 Se utilizan anotaciones de Bean Validation en los DTOs:
 
