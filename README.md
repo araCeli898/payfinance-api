@@ -71,7 +71,7 @@ Usuario: sa
 Contraseña: (vacía)
 
 
-4. Servicios y Endpoints
+4. Servicios y Endpoints para POSTAM
    
 ## TransactionController
 
@@ -79,17 +79,19 @@ GET	/transaction/{userId}	Obtener todas las transacciones de un usuario.
 
 GET	/transaction/{userId}/{transactionId}	Obtener una transacción específica de un usuario.
 
+POST /transaction	Crear una nueva transacción.
 
-POST	/transaction	Crear una nueva transacción.
-
-## Nota:
+Nota:
 Se aplicaron pattern para los siguientes parametros: recipientAccount, curreny, bankCode. Se deja especificado valores admisibles para los 3 campos a la hora de hacer pruebas:
 
 currency: USD, EUR, ARS;
 recipientAccount: DE98770400440532013123, EF56770400440532852123, CR95175300440532013751
 bankCode: BANK123, BANK456, BANK789
 
+EJEMPLOS PARA USO DE POSTMAN:
+
 POST: http://localhost:8080/transaction
+
 Ejemplo de DTO de request en post: 
 
     {
