@@ -8,7 +8,7 @@ import java.util.UUID;
 @Data
 public class TransactionDTO {
 
-    private UUID transactionId;
+    private Integer transactionId;
     private Integer userId;
     private String recipientAccount;
     private Double amount;

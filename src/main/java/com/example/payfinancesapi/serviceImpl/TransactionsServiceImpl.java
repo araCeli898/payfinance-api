@@ -9,15 +9,11 @@ import com.example.payfinancesapi.service.TransactionsService;
 import com.example.payfinancesapi.util.Constants;
 import com.example.payfinancesapi.util.RandomStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.apache.bcel.classfile.Constant;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 
 @Service
@@ -28,7 +24,7 @@ public class TransactionsServiceImpl implements TransactionsService {
     private TransactionsRepository transactionsRepository;
 
     @Override
-    public Result getTransactions(String userId) {
+    public Result getTransactions(Integer userId) {
         log.info("Finding all transactions");
         List<Transactions> transactions = transactionsRepository.findAllTransactionsByUserId(userId);
         ModelMapper modelMapper = new ModelMapper();
@@ -37,9 +33,9 @@ public class TransactionsServiceImpl implements TransactionsService {
     }
 
     @Override
-    public Result getTransactionsById(UUID transactionId) throws Exception {
+    public Result getTransactionsById(Integer userId,Integer transactionId) throws Exception {
         log.info("Finding transactions by transactionId {}", transactionId);
-        Transactions transaction = findTransactionById(transactionId);
+        Transactions transaction = findTransactionById(userId, transactionId);
         return new Result(Constants.RESULT_OK, new ModelMapper().map(transaction, TransactionDTO.class));
     }
 
@@ -62,8 +58,8 @@ public class TransactionsServiceImpl implements TransactionsService {
         return new Result(Constants.RESULT_OK, new ModelMapper().map(savedTransaction, TransactionDTO.class));
     }
 
-    private Transactions findTransactionById (UUID transactionId) throws Exception {
-        return transactionsRepository.findTransactionsByTransactionId(transactionId)
+    private Transactions findTransactionById (Integer userId, Integer transactionId) throws Exception {
+        return transactionsRepository.findTransactionsByTransactionId(userId, transactionId)
                 .orElseThrow(() -> {
                     log.warn("Finding transaction by transactionId {}", transactionId);
                     return new Exception("Transaction not found");

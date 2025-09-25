@@ -5,11 +5,9 @@ import com.example.payfinancesapi.modelEnum.ValidationTransactionStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -17,10 +15,8 @@ import java.util.UUID;
 public class Transactions {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(updatable = false, nullable = false)
-    private UUID transactionId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer transactionId;
 
     private Integer userId;
 

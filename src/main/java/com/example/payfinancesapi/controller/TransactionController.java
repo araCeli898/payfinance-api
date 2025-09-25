@@ -2,7 +2,6 @@ package com.example.payfinancesapi.controller;
 
 import com.example.payfinancesapi.data.Result;
 import com.example.payfinancesapi.dto.TransactionRequestDTO;
-import com.example.payfinancesapi.model.Transactions;
 import com.example.payfinancesapi.service.TransactionsService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +18,14 @@ public class TransactionController {
         this.transactionsService = transactionsService;
     }
 
-    @GetMapping("/userId")
-    public Result getTransactions(@PathVariable String userId) {
+    @GetMapping("/{userId}")
+    public Result getTransactions(@PathVariable Integer userId) {
         return transactionsService.getTransactions(userId);
     }
 
-    @GetMapping("/{transactionId}")
-    public Result getTransactionsById(@PathVariable UUID transactionId) throws Exception {
-        return transactionsService.getTransactionsById(transactionId);
+    @GetMapping("/{userId}/{transactionId}")
+    public Result getTransactionsById(@PathVariable Integer userId, @PathVariable Integer transactionId) throws Exception {
+        return transactionsService.getTransactionsById(userId, transactionId);
     }
 
     @PostMapping
