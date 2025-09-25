@@ -9,15 +9,11 @@ import com.example.payfinancesapi.service.TransactionsService;
 import com.example.payfinancesapi.util.Constants;
 import com.example.payfinancesapi.util.RandomStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.apache.bcel.classfile.Constant;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 
 @Service
@@ -28,18 +24,24 @@ public class TransactionsServiceImpl implements TransactionsService {
     private TransactionsRepository transactionsRepository;
 
     @Override
-    public Result getTransactions(String userId) {
-        log.info("Finding all transactions");
-        List<Transactions> transactions = transactionsRepository.findAllTransactionsByUserId(userId);
+    public Result getTransactions(Integer userId) throws Exception {
+        log.info("Buscando transacciones");
+        List<Transactions> transactions;
+        try {
+            transactions = findTransactionsByUserId(userId);;
+        } catch (Exception e) {
+            log.warn("No se encontraron transacciones para el usuario {}", userId);
+            throw new Exception("Usuario no encontrado o sin transacciones, userId " + userId);
+        }
         ModelMapper modelMapper = new ModelMapper();
         List<TransactionDTO> transactionDTOS = Arrays.asList(modelMapper.map(transactions, TransactionDTO[].class));
         return new Result(Constants.RESULT_OK, transactionDTOS);
     }
 
     @Override
-    public Result getTransactionsById(UUID transactionId) throws Exception {
-        log.info("Finding transactions by transactionId {}", transactionId);
-        Transactions transaction = findTransactionById(transactionId);
+    public Result getTransactionsById(Integer userId,Integer transactionId) throws Exception {
+        log.info("Buscando transacciones para transactionId {}", transactionId);
+        Transactions transaction = findTransactionById(userId, transactionId);
         return new Result(Constants.RESULT_OK, new ModelMapper().map(transaction, TransactionDTO.class));
     }
 
@@ -53,20 +55,32 @@ public class TransactionsServiceImpl implements TransactionsService {
         transaction.setStatus(RandomStatus.getRandomStatus());
         Transactions savedTransaction;
         try {
-            log.info("Creating transaction, userId {}", transaction.getUserId());
+            log.info("Creando transacción, userId {}", transaction.getUserId());
             savedTransaction = transactionsRepository.save(transaction);
         } catch (Exception e) {
-            log.error("Error creating transaction, userId {}", transaction.getUserId(), e);
-            throw new Exception("Error creating transaction, userId " + transaction.getUserId());
+            log.error("Error al crear transacción, userId {}", transaction.getUserId(), e);
+            throw new Exception("Error al crear transacción, userId " + transaction.getUserId());
         }
         return new Result(Constants.RESULT_OK, new ModelMapper().map(savedTransaction, TransactionDTO.class));
     }
 
-    private Transactions findTransactionById (UUID transactionId) throws Exception {
-        return transactionsRepository.findTransactionsByTransactionId(transactionId)
+    private Transactions findTransactionById (Integer userId, Integer transactionId) throws Exception {
+        return transactionsRepository.findTransactionsByTransactionId(userId, transactionId)
                 .orElseThrow(() -> {
-                    log.warn("Finding transaction by transactionId {}", transactionId);
-                    return new Exception("Transaction not found");
+                    log.warn("No se encontraron transacciones para el userId {} y el transactionId {} ", userId, transactionId);
+                    return new Exception("La transacción o el usuario no existe");
                 });
     }
+
+    private List<Transactions> findTransactionsByUserId(Integer userId) throws Exception {
+        List<Transactions> transactions = transactionsRepository.findAllTransactionsByUserId(userId);
+
+        if (transactions.isEmpty()) {
+            log.warn("No se encontraron transacciones para el userId {}", userId);
+            throw new Exception("Usuario no encontrado o sin transacciones");
+        }
+
+        return transactions;
+    }
+
 }
