@@ -1,11 +1,15 @@
 package com.example.payfinancesapi.model;
 
+import com.example.payfinancesapi.modelEnum.BankCode;
+import com.example.payfinancesapi.modelEnum.ValidationTransactionStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -13,10 +17,12 @@ import java.time.LocalDateTime;
 public class Transactions {
 
     @Id
-    @GeneratedValue
-    private String transactionId;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(updatable = false, nullable = false)
+    private UUID transactionId;
 
-    private int userId;
+    private Integer userId;
 
     private String recipientAccount;
 
@@ -24,7 +30,6 @@ public class Transactions {
 
     private String currency;
 
-    @Enumerated(EnumType.STRING)
     private ValidationTransactionStatus status;
 
     @CreationTimestamp

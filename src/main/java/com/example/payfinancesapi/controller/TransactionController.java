@@ -7,6 +7,8 @@ import com.example.payfinancesapi.service.TransactionsService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/transaction")
 public class TransactionController {
@@ -17,18 +19,18 @@ public class TransactionController {
         this.transactionsService = transactionsService;
     }
 
-    @GetMapping
-    public Result getTransactions() {
-        return transactionsService.getTransactions();
+    @GetMapping("/userId")
+    public Result getTransactions(@PathVariable String userId) {
+        return transactionsService.getTransactions(userId);
     }
 
     @GetMapping("/{transactionId}")
-    public Result getTransactionsById(@PathVariable String transactionId) throws Exception {
+    public Result getTransactionsById(@PathVariable UUID transactionId) throws Exception {
         return transactionsService.getTransactionsById(transactionId);
     }
 
     @PostMapping
-    public Result createTransaction(@RequestBody @Valid TransactionRequestDTO req) throws Exception {
+    public Result createTransaction(@Valid @RequestBody TransactionRequestDTO req) throws Exception {
         return transactionsService.createTransaction(req);
     }
 
