@@ -101,6 +101,7 @@ Ejemplo de DTO de request:
 
 Ejemplo de respuesta:
 
+
 {
 
   "status": "OK",
@@ -150,12 +151,11 @@ Se utilizan anotaciones de Bean Validation en los DTOs:
 Si la validación falla, la API retorna un mensaje de error estándar:
 
 json
+
 {
-  "timestamp": "2025-09-24T23:21:23.126+00:00",
-  "status": 400,
-  "error": "Bad Request",
-  "message": "recipientAccount: Ingrese una cuenta bancaria válida",
-  "path": "/transaction"
+  "status": 400
+  
+  "message": "recipientAccount: Ingrese una cuenta bancaria válida"
 }
 
 ## 6. Diagramas y documentación
