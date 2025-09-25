@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -27,36 +28,41 @@ public class TransactionsServiceImpl implements TransactionsService {
     private TransactionsRepository transactionsRepository;
 
     @Override
-    public Result getTransactions() {
+    public Result getTransactions(String userId) {
         log.info("Finding all transactions");
-        List<Transactions> transactions = transactionsRepository.findAllTransactions();
+        List<Transactions> transactions = transactionsRepository.findAllTransactionsByUserId(userId);
         ModelMapper modelMapper = new ModelMapper();
         List<TransactionDTO> transactionDTOS = Arrays.asList(modelMapper.map(transactions, TransactionDTO[].class));
         return new Result(Constants.RESULT_OK, transactionDTOS);
     }
 
     @Override
-    public Result getTransactionsById(String transactionId) throws Exception {
+    public Result getTransactionsById(UUID transactionId) throws Exception {
         log.info("Finding transactions by transactionId {}", transactionId);
         Transactions transaction = findTransactionById(transactionId);
-        return new Result(Constants.RESULT_OK, new ModelMapper().map(transaction, TransactionDTO[].class));
+        return new Result(Constants.RESULT_OK, new ModelMapper().map(transaction, TransactionDTO.class));
     }
 
     @Override
     public Result createTransaction(TransactionRequestDTO req) throws Exception {
-        Transactions transaction = new ModelMapper().map(req, Transactions.class);
+        ModelMapper mapper = new ModelMapper();
+        mapper.typeMap(TransactionRequestDTO.class, Transactions.class)
+                .addMappings(m -> m.skip(Transactions::setTransactionId));
+
+        Transactions transaction = mapper.map(req, Transactions.class);
         transaction.setStatus(RandomStatus.getRandomStatus());
+        Transactions savedTransaction;
         try {
             log.info("Creating transaction, userId {}", transaction.getUserId());
-            transactionsRepository.save(transaction);
+            savedTransaction = transactionsRepository.save(transaction);
         } catch (Exception e) {
             log.error("Error creating transaction, userId {}", transaction.getUserId(), e);
             throw new Exception("Error creating transaction, userId " + transaction.getUserId());
         }
-        return new Result(Constants.RESULT_OK, TransactionDTO[].class);
+        return new Result(Constants.RESULT_OK, new ModelMapper().map(savedTransaction, TransactionDTO.class));
     }
 
-    private Transactions findTransactionById (String transactionId) throws Exception {
+    private Transactions findTransactionById (UUID transactionId) throws Exception {
         return transactionsRepository.findTransactionsByTransactionId(transactionId)
                 .orElseThrow(() -> {
                     log.warn("Finding transaction by transactionId {}", transactionId);

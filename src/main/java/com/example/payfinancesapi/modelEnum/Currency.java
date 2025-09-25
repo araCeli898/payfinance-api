@@ -1,4 +1,4 @@
-package com.example.payfinancesapi.model;
+package com.example.payfinancesapi.modelEnum;
 
 
 public enum Currency {

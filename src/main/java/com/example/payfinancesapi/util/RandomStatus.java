@@ -1,6 +1,6 @@
 package com.example.payfinancesapi.util;
 
-import com.example.payfinancesapi.model.ValidationTransactionStatus;
+import com.example.payfinancesapi.modelEnum.ValidationTransactionStatus;
 
 import java.util.Random;
 
