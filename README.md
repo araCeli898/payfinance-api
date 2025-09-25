@@ -100,13 +100,6 @@ Ejemplo de DTO de request:
 
 
 Ejemplo de respuesta:
-
-
-{
-
-  "status": "OK",
-  
-  "data": [
   
     {
     
@@ -127,16 +120,7 @@ Ejemplo de respuesta:
       "bankCode": "BANK123"
       
     }
-    
-  ],
-  
-  "error_code": null,
-  
-  "error_description": null,
-  
-  "code": null
-  
-}
+
 
 
 ## 5. Validaciones
@@ -153,9 +137,9 @@ Si la validación falla, la API retorna un mensaje de error estándar:
 json
 
 {
-  "status": 400
+  "status": error
   
-  "message": "recipientAccount: Ingrese una cuenta bancaria válida"
+  "errorMessage": "Ingrese una cuenta bancaria válida"
 }
 
 ## 6. Diagramas y documentación
