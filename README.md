@@ -79,24 +79,31 @@ GET	/transaction/{userId}	Obtener todas las transacciones de un usuario.
 
 GET	/transaction/{userId}/{transactionId}	Obtener una transacción específica de un usuario.
 
+
 POST	/transaction	Crear una nueva transacción.
 
+## Nota:
+Se aplicaron pattern para los siguientes parametros: recipientAccount, curreny, bankCode. Se deja especificado valores admisibles para los 3 campos a la hora de hacer pruebas:
+
+## currency: USD, EUR, ARS;
+## recipientAccount: DE98770400440532013123, EF56770400440532852123, CR95175300440532013751
+## bankCode: BANK123, BANK456, BANK789
 
 Ejemplo de DTO de request: 
 
-{
+    {
 
-  "userId": 1,
+      "userId": 1,
   
-  "recipientAccount": "DE98770400440532013123",
+      "recipientAccount": "DE98770400440532013123",
   
-  "amount": 500.0,
+      "amount": 500.0,
   
-  "currency": "EUR",
+      "currency": "EUR",
   
-  "bankCode": "BANK123"
+      "bankCode": "BANK123"
   
-}
+    }
 
 
 Ejemplo de respuesta:
@@ -136,11 +143,13 @@ Si la validación falla, la API retorna un mensaje de error estándar:
 
 json
 
-{
-  "status": error
+    {
+
+      "status": error
+
+      "errorMessage": "Ingrese una cuenta bancaria válida"
   
-  "errorMessage": "Ingrese una cuenta bancaria válida"
-}
+    }
 
 ## 6. Diagramas y documentación
    
